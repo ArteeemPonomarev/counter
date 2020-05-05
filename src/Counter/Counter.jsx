@@ -1,5 +1,6 @@
 import React from 'react';
 import style from './Counter.module.css';
+import Button from "./Button";
 
 
 class Counter extends React.Component {
@@ -40,16 +41,16 @@ class Counter extends React.Component {
                 {this.state.value}
             </div>
             <div className={style.buttons}>
-                <button className={`${style.button} ${style[classForDisInc]}`}
-                        onClick={this.onIncClick}
-                        disabled={disabledInc}>
+                <Button onIncClick={this.onIncClick}
+                        disabled={disabledInc}
+                        classForDis={classForDisInc}>
                     Inc
-                </button>
-                <button className={`${style.button} ${style[classForDisRes]}`}
-                        onClick={this.onResClick}
-                        disabled={disabledRes}>
+                </Button>
+                <Button onIncClick={this.onResClick}
+                        disabled={disabledRes}
+                        classForDis={classForDisRes}>
                     Res
-                </button>
+                </Button>
             </div>
         </div>
     );
