@@ -1,0 +1,55 @@
+.counter {
+    margin: 0 auto;
+    margin-top: 200px;
+    border: 2px solid #1BD1ED;
+    border-radius: 10px;
+    width: 400px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.display {
+    border: 2px solid #1BD1ED;
+    border-radius: 10px;
+    width: 90%;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #1BD1ED;
+    font-size: 60px;
+    font-weight: 700;
+}
+
+.buttons {
+    border: 2px solid #1BD1ED;
+    border-radius: 10px;
+    width: 90%;
+    height: 30%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.button {
+    background-color: #1BD1ED;
+    border: none;
+    border-radius: 10px;
+    color: #3C3838;
+    padding: 20px 55px;
+    font-size: 25px;
+    font-weight: 600;
+}
+
+.stopCount {
+    color: red;
+    font-size: 80px;
+    font-weight: 800;
+}
+
+.disabled {
+    opacity: 0.3;
+}
