@@ -1,6 +1,7 @@
 import React from 'react';
 import style from './Counter.module.css';
 import Button from "./Button";
+import Display from "./Display";
 
 
 class Counter extends React.Component {
@@ -26,6 +27,30 @@ class Counter extends React.Component {
         })
     }
 
+    onMaxValueChange = (e) => {
+        if (e.currentTarget.value > this.state.maxValue) {
+            this.setState({
+                maxValue: this.state.maxValue + 1
+            })
+        } else {
+            this.setState({
+                maxValue: this.state.maxValue - 1
+            })
+        }
+    }
+
+    onMinValueChange = (e) => {
+        if (e.currentTarget.value > this.state.minValue) {
+            this.setState({
+                minValue: this.state.minValue + 1
+            })
+        } else {
+            this.setState({
+                minValue: this.state.minValue - 1
+            })
+        }
+    }
+
   render = () => {
 
     const classForStop = this.state.value === this.state.maxValue ? 'stopCount' : '';
@@ -36,10 +61,11 @@ class Counter extends React.Component {
     const classForDisRes = disabledRes ? 'disabled' : '';
 
     return (
+        <div className={style.wrapper}>
         <div className={style.counter}>
-            <div className={`${style.display} ${style[classForStop]}`}>
-                {this.state.value}
-            </div>
+            <Display value={this.state.value}
+                     classForStop={classForStop}/>
+
             <div className={style.buttons}>
                 <Button onIncClick={this.onIncClick}
                         disabled={disabledInc}
@@ -53,6 +79,22 @@ class Counter extends React.Component {
                 </Button>
             </div>
         </div>
+      <div className={style.counter}>
+          <div className={`${style.display} ${style.values}`}>
+              <div>maxValue : <input type="number" value = {this.state.maxValue} onChange={this.onMaxValueChange}/></div>
+              <div>minValue : <input type="number" value = {this.state.minValue} onChange={this.onMinValueChange}/></div>
+          </div>
+
+          <div className={style.buttons}>
+              <Button onIncClick={this.onIncClick}
+                      disabled={disabledInc}
+                      classForDis={classForDisInc}>
+                  Set
+              </Button>
+
+          </div>
+      </div>
+      </div>
     );
   }
 }

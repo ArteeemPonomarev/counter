@@ -1,0 +1,17 @@
+.display {
+    border: 2px solid #1BD1ED;
+    border-radius: 10px;
+    width: 90%;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #1BD1ED;
+    font-size: 60px;
+    font-weight: 700;
+}
+.stopCount {
+    color: red;
+    font-size: 80px;
+    font-weight: 800;
+}

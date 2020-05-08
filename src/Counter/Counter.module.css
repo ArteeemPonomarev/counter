@@ -1,3 +1,6 @@
+.wrapper {
+    display: flex;
+}
 .counter {
     margin: 0 auto;
     margin-top: 200px;
@@ -10,7 +13,6 @@
     justify-content: space-around;
     align-items: center;
 }
-
 .display {
     border: 2px solid #1BD1ED;
     border-radius: 10px;
@@ -23,7 +25,6 @@
     font-size: 60px;
     font-weight: 700;
 }
-
 .buttons {
     border: 2px solid #1BD1ED;
     border-radius: 10px;
@@ -33,10 +34,8 @@
     justify-content: space-around;
     align-items: center;
 }
-
-.stopCount {
-    color: red;
-    font-size: 80px;
-    font-weight: 800;
+.values {
+    font-size: 20px;
+    font-weight: normal;
 }
 
