@@ -2,6 +2,8 @@ import React from 'react';
 import style from './InputSet.module.css';
 
 class InputSet extends React.Component {
+
+
     render = () => {
 
         let classForDisabled = this.props.isError ? 'disabled' : '';
@@ -10,10 +12,12 @@ class InputSet extends React.Component {
             <div>
                 {this.props.title} :
                 <input type={this.props.type}
+                       data-title={this.props.title}
                        className={style[classForDisabled]}
                        value = {this.props.value}
                        onClick={this.props.onClickChange}
-                       onChange={this.props.onChangeFunc}/>
+                       onChange={this.props.onChangeFunc}
+                />
             </div>
         )
     }

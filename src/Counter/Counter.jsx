@@ -1,8 +1,7 @@
 import React from 'react';
 import style from './Counter.module.css';
-import Button from "./Button";
-import Display from "./Display";
-import InputSet from "./InputSet";
+import CounterItem from "./CounterItem/CounterItem";
+import SettingItem from "./SettingItem/SettingItem";
 
 
 class Counter extends React.Component {
@@ -12,150 +11,115 @@ class Counter extends React.Component {
     }
 
     state = {
-
         settedMaxValue: 5,
         settedMinValue: 0,
-        maxValue: 5,
-        minValue: 0,
         value: 0,
         isSetted: false,
     }
 
     saveState = () => {
+
         let stateAsString = JSON.stringify(this.state);
         localStorage.setItem('counter-state', stateAsString)
     }
 
     restoreState = () => {
-        let state = {};
+
         let stateAsString = localStorage.getItem('counter-state')
         if (stateAsString != null) {
-            state = JSON.parse(stateAsString)
+            let state = JSON.parse(stateAsString);
+            this.setState(state);
         }
-        this.setState(state);
     }
 
     onIncClick = () => {
-        if (this.state.value < this.state.maxValue) {
+        if (this.state.value < this.state.settedMaxValue) {
             this.setState({
                 value: this.state.value + 1
-            }, () => { this.saveState(); })
+            }, () => {
+                this.saveState();
+            })
         }
     }
 
     onResClick = () => {
         this.setState({
             value: this.state.settedMinValue,
-            stopCount: false
-        }, () => { this.saveState(); })
+        }, () => {
+            this.saveState();
+        })
     }
 
-    onSettedMaxValueChange = (e) => {
-        if (e.currentTarget.value > this.state.settedMaxValue) {
-            this.setState({
-                isSetted: false,
-                settedMaxValue: this.state.settedMaxValue + 1
-            }, () => { this.saveState(); })
+    onSettedValueChange = (e) => {
+        const title = e.target.dataset.title
+        let value;
+        let property;
+        if (title === 'maxValue') {
+            value = this.state.settedMaxValue
+            property = 'settedMaxValue'
         } else {
-            this.setState({
-                isSetted: false,
-                settedMaxValue: this.state.settedMaxValue - 1
-            }, () => { this.saveState(); })
+            value = this.state.settedMinValue
+            property = 'settedMinValue'
         }
-    }
-
-    onSettedMinValueChange = (e) => {
-        if (e.currentTarget.value > this.state.settedMinValue) {
+        if (e.currentTarget.value > value) {
             this.setState({
                 isSetted: false,
-                settedMinValue: this.state.settedMinValue + 1
-            }, () => { this.saveState(); })
+                [property]: value + 1
+            }, () => {
+                this.saveState();
+            })
         } else {
             this.setState({
                 isSetted: false,
-                settedMinValue: this.state.settedMinValue - 1
-            }, () => { this.saveState(); })
+                [property]: value - 1
+            }, () => {
+                this.saveState();
+            })
         }
     }
 
 
     onSetValue = () => {
         this.setState({
-          isSetted: true,
-          maxValue: this.state.settedMaxValue,
-          minValue: this.state.settedMinValue,
-          value: this.state.settedMinValue
-        }, () => { this.saveState(); })
+            isSetted: true,
+            value: this.state.settedMinValue
+        }, () => {
+            this.saveState();
+        })
+    }
+
+    deactivateSetMode = () => {
+        this.setState({
+            isSetted: false
+        })
     }
 
 
-  render = () => {
-
-    const classForStop = this.state.value === this.state.maxValue ? 'stopCount' : '';
-    const classForSeted = !this.state.isSetted ? 'setedClass' : '';
-
-    const disabledInc = this.state.value === this.state.maxValue;
-    const disabledRes = this.state.value === this.state.minValue;
-
-    const isErrorMax = (this.state.settedMaxValue <= this.state.settedMinValue) || this.state.settedMaxValue < 0
-    const isErrorMin = (this.state.settedMaxValue <= this.state.settedMinValue) || this.state.settedMinValue < 0
+    render = () => {
 
 
-    const classForDisInc = disabledInc || !this.state.isSetted ? 'disabled' : '';
-    const classForDisRes = disabledRes ? 'disabled' : '';
-    const classForSetBtn = this.state.isSetted || isErrorMin || isErrorMax ? 'disabled' : '';
+        const isErrorMax = (this.state.settedMaxValue <= this.state.settedMinValue) || this.state.settedMaxValue < 0
+        const isErrorMin = (this.state.settedMaxValue <= this.state.settedMinValue) || this.state.settedMinValue < 0
 
 
-    return (
-        <div className={style.wrapper}>
-        <div className={style.counter}>
-            <Display value={this.state.value}
-                     classForStop={classForStop}
-                     classForSeted={classForSeted}
-                     isSeted={this.state.isSetted}
-                     isErrorMessage={isErrorMax || isErrorMin} />
+        return (
 
-            <div className={style.buttons}>
-                <Button onIncClick={this.onIncClick}
-                        disabled={disabledInc}
-                        classForDis={classForDisInc}>
-                    Inc
-                </Button>
-                <Button onIncClick={this.onResClick}
-                        disabled={disabledRes}
-                        classForDis={classForDisRes}>
-                    Res
-                </Button>
+            <div className={style.wrapper}>
+                <CounterItem state={this.state}
+                             isError={isErrorMin || isErrorMax}
+                             onIncClick={this.onIncClick}
+                             onResClick={this.onResClick}
+                             isSetted={this.state.isSetted}/>
+
+                <SettingItem settedMaxValue={this.state.settedMaxValue}
+                             settedMinValue={this.state.settedMinValue}
+                             isSetted={this.state.isSetted}
+                             onSettedValueChange={this.onSettedValueChange}
+                             onSetValue={this.onSetValue}
+                             deactivateSetMode={this.deactivateSetMode}/>
             </div>
-        </div>
-      <div className={style.counter}>
-          <div className={`${style.display} ${style.values}`}>
-              <InputSet title='maxValue'
-                        type='number'
-                        isError={isErrorMax}
-                        value={this.state.settedMaxValue}
-                        onClickChange={() => {this.setState({isSetted: false})}}
-                        onChangeFunc={this.onSettedMaxValueChange}/>
-
-              <InputSet title='minValue'
-                        type='number'
-                        value={this.state.settedMinValue}
-                        isError={isErrorMin}
-                        onClickChange={() => {this.setState({isSetted: false})}}
-                        onChangeFunc={this.onSettedMinValueChange}/>
-          </div>
-
-          <div className={style.buttons}>
-              <Button onIncClick={this.onSetValue}
-                      disabled={this.state.isSetted || isErrorMin || isErrorMax}
-                      classForDis={classForSetBtn}>
-                  Set
-              </Button>
-          </div>
-      </div>
-      </div>
-    );
-  }
+        );
+    }
 }
 
 export default Counter;
