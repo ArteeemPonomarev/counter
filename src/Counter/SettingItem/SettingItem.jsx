@@ -1,7 +1,8 @@
 import React from "react";
 import style from './SettingItem.module.css'
-import InputSet from "../InputSet";
-import Button from "../Button";
+import InputSet from "../InputSet/InputSet";
+import Button from "../Button/Button";
+import {BlockBorder, ButtonsBlock, DisplayBlock} from "../StyledElements/StyledElements";
 
 
 class SettingItem extends React.Component {
@@ -13,32 +14,33 @@ class SettingItem extends React.Component {
         const classForSetBtn = this.props.isSetted || isErrorMin || isErrorMax ? 'disabled' : '';
 
         return (
-            <div className={style.settingsBlock}>
-                <div className={`${style.display} ${style.values}`}>
+            <BlockBorder>
+                <DisplayBlock>
+                    <div className={style.values}>
+                        <InputSet title='maxValue'
+                                  type='number'
+                                  isError={isErrorMax}
+                                  value={this.props.settedMaxValue}
+                                  onClickChange={this.props.deactivateSetMode}
+                                  onChangeFunc={this.props.onSettedValueChange}/>
 
-                    <InputSet title='maxValue'
-                              type='number'
-                              isError={isErrorMax}
-                              value={this.props.settedMaxValue}
-                              onClickChange={this.props.deactivateSetMode}
-                              onChangeFunc={this.props.onSettedValueChange}/>
+                        <InputSet title='minValue'
+                                  type='number'
+                                  value={this.props.settedMinValue}
+                                  isError={isErrorMin}
+                                  onClickChange={this.props.deactivateSetMode}
+                                  onChangeFunc={this.props.onSettedValueChange}/>
+                    </div>
+                </DisplayBlock>
 
-                    <InputSet title='minValue'
-                              type='number'
-                              value={this.props.settedMinValue}
-                              isError={isErrorMin}
-                              onClickChange={this.props.deactivateSetMode}
-                              onChangeFunc={this.props.onSettedValueChange}/>
-                </div>
-
-                <div className={style.buttonsBlock}>
+                <ButtonsBlock>
                     <Button onIncClick={this.props.onSetValue}
                             disabled={this.props.isSetted || isErrorMin || isErrorMax}
                             classForDis={classForSetBtn}>
                         Set
                     </Button>
-                </div>
-            </div>
+                </ButtonsBlock>
+            </BlockBorder>
         )
     }
 }

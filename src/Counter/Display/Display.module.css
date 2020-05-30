@@ -1,0 +1,14 @@
+.stopCount {
+    color: red;
+    font-size: 80px;
+    font-weight: 800;
+}
+
+.settedClass {
+    font-size: 20px;
+}
+
+.errorMessage {
+    color: red;
+    font-size: 25px;
+}

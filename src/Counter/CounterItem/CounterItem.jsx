@@ -1,7 +1,8 @@
 import React from 'react';
-import style from './CounterItem.module.css';
-import Display from "../Display";
-import Button from "../Button";
+import Display from "../Display/Display";
+import Button from "../Button/Button";
+import {BlockBorder, ButtonsBlock} from "../StyledElements/StyledElements";
+
 
 class CounterItem extends React.Component {
     render = () => {
@@ -16,13 +17,13 @@ class CounterItem extends React.Component {
         const classForSetted = !this.props.state.isSetted ? 'settedClass' : '';
 
         return (
-            <div className={style.counterItem}>
+            <BlockBorder>
                 <Display value={this.props.state.value}
                          classForStop={classForStop}
                          classForSeted={classForSetted}
                          isSeted={this.props.isSetted}
                          isErrorMessage={this.props.isError}/>
-                <div className={style.buttonsBlock}>
+                <ButtonsBlock>
                     <Button onIncClick={this.props.onIncClick}
                             disabled={isDisabledInc}
                             classForDis={classForDisInc}>
@@ -33,9 +34,8 @@ class CounterItem extends React.Component {
                             classForDis={classForDisRes}>
                         Res
                     </Button>
-                </div>
-
-            </div>
+                </ButtonsBlock>
+            </BlockBorder>
         )
     }
 }

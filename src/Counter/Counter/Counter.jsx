@@ -1,7 +1,7 @@
 import React from 'react';
 import style from './Counter.module.css';
-import CounterItem from "./CounterItem/CounterItem";
-import SettingItem from "./SettingItem/SettingItem";
+import CounterItem from "../CounterItem/CounterItem";
+import SettingItem from "../SettingItem/SettingItem";
 
 
 class Counter extends React.Component {
