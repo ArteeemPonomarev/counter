@@ -10,9 +10,10 @@ class Display extends React.Component {
         return (
             <DisplayBlock>
             <div className={`${style[this.props.classForStop]} ${style[this.props.classForSeted]} ${style[classForErrorMessage]}`}>
-                {!this.props.isSeted ?
-                    this.props.isErrorMessage ? 'Incorrect value' : <span className={style.values}>enter values and press 'set'</span>
-                    : this.props.value }
+                {/*{!this.props.isSeted ?*/}
+                {/*    this.props.isErrorMessage ? 'Incorrect value' : <span className={style.values}>enter values and press 'set'</span>*/}
+                {/*    : this.props.value }*/}
+                {this.props.value}
             </div>
             </DisplayBlock>
         );
