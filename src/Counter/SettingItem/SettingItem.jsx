@@ -3,6 +3,7 @@ import style from './SettingItem.module.css'
 import InputSet from "../InputSet/InputSet";
 import Button from "../Button/Button";
 import {BlockBorder, ButtonsBlock, DisplayBlock} from "../StyledElements/StyledElements";
+import { connect } from 'react-redux';
 
 
 class SettingItem extends React.Component {
@@ -45,4 +46,19 @@ class SettingItem extends React.Component {
     }
 }
 
-export default SettingItem;
+const mapStateToProps = (state) => {
+    return {
+        settedMaxValue: state.settedMaxValue,
+        settedMinValue: state.settedMinValue,
+        value: state.value,
+        isSetted: state.isSetted
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SettingItem);
