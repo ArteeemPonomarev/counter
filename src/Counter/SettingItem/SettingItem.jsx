@@ -3,10 +3,24 @@ import style from './SettingItem.module.css'
 import InputSet from "../InputSet/InputSet";
 import Button from "../Button/Button";
 import {BlockBorder, ButtonsBlock, DisplayBlock} from "../StyledElements/StyledElements";
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
+import {changeSettedValue, deactivateSetMode, setValues} from "../../store/reducer";
 
 
 class SettingItem extends React.Component {
+
+    onSettedValueChange = (e) => {
+        const title = e.target.dataset.title
+        let property;
+        if (title === 'maxValue') {
+            property = 'settedMaxValue'
+        } else {
+            property = 'settedMinValue'
+        }
+        this.props.changeSettedValue(property, e.currentTarget.value)
+    }
+
+
     render = () => {
 
         const isErrorMax = (this.props.settedMaxValue <= this.props.settedMinValue) || this.props.settedMaxValue < 0
@@ -23,19 +37,19 @@ class SettingItem extends React.Component {
                                   isError={isErrorMax}
                                   value={this.props.settedMaxValue}
                                   onClickChange={this.props.deactivateSetMode}
-                                  onChangeFunc={this.props.onSettedValueChange}/>
+                                  onChangeFunc={this.onSettedValueChange}/>
 
                         <InputSet title='minValue'
                                   type='number'
                                   value={this.props.settedMinValue}
                                   isError={isErrorMin}
                                   onClickChange={this.props.deactivateSetMode}
-                                  onChangeFunc={this.props.onSettedValueChange}/>
+                                  onChangeFunc={this.onSettedValueChange}/>
                     </div>
                 </DisplayBlock>
 
                 <ButtonsBlock>
-                    <Button onIncClick={this.props.onSetValue}
+                    <Button onIncClick={this.props.setValues}
                             disabled={this.props.isSetted || isErrorMin || isErrorMax}
                             classForDis={classForSetBtn}>
                         Set
@@ -57,7 +71,15 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-
+        deactivateSetMode: () => {
+            dispatch(deactivateSetMode())
+        },
+        setValues: () => {
+            dispatch(setValues())
+        },
+        changeSettedValue: (title, value) => {
+            dispatch(changeSettedValue(title, value))
+        }
     }
 }
 
