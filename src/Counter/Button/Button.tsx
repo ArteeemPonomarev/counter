@@ -1,7 +1,15 @@
 import React from 'react';
 import style from './Button.module.css'
 
-class Button extends React.Component {
+type PropsType = {
+    classForDis: string
+    onIncClick: () => void
+    disabled: boolean
+}
+
+type StateType ={}
+
+class Button extends React.Component<PropsType, StateType> {
     render = () => {
         return (
             <button className={`${style.button} ${style[this.props.classForDis]}`}

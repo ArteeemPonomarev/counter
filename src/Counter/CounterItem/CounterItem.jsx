@@ -1,11 +1,14 @@
 import React from 'react';
-import Display from "../Display/Display";
+import Display from "../Display/Display.tsx";
 import Button from "../Button/Button";
 import {BlockBorder, ButtonsBlock} from "../StyledElements/StyledElements";
-import {connect} from "react-redux";
+import {incCurrentValue, resCurrentValue} from "../../store/reducer";
+import {connect} from 'react-redux';
 
 
 class CounterItem extends React.Component {
+
+
     render = () => {
 
         const isDisabledInc = this.props.value === this.props.settedMaxValue;
@@ -14,28 +17,28 @@ class CounterItem extends React.Component {
         const classForDisInc = isDisabledInc || !this.props.isSetted ? 'disabled' : '';
         const classForDisRes = isDisabledRes ? 'disabled' : '';
 
-        const classForStop = this.props.isSetted && this.props.state.value === this.props.settedMaxValue ? 'stopCount' : '';
+        const classForStop = this.props.isSetted && this.props.value === this.props.settedMaxValue ? 'stopCount' : '';
         const classForSetted = !this.props.isSetted ? 'settedClass' : '';
+
+        const isErrorMax = (this.props.settedMaxValue <= this.props.settedMinValue) || this.props.settedMaxValue < 0
+        const isErrorMin = (this.props.settedMaxValue <= this.props.settedMinValue) || this.props.settedMinValue < 0
 
         return (
             <BlockBorder>
                 <Display value={this.props.value}
-                         // classForStop={classForStop}
-                         // classForSeted={classForSetted}
-                         // isSeted={this.props.isSetted}
-                         // isErrorMessage={this.props.isError}
-                />
+                         classForStop={classForStop}
+                         classForSeted={classForSetted}
+                         isSeted={this.props.isSetted}
+                         isErrorMessage={isErrorMin || isErrorMax}/>
                 <ButtonsBlock>
-                    <Button onIncClick={() => {this.props.onIncClick()}}
-                            // disabled={isDisabledInc}
-                            // classForDis={classForDisInc}
-                    >
+                    <Button onIncClick={this.props.incValue}
+                            disabled={isDisabledInc}
+                            classForDis={classForDisInc}>
                         Inc
                     </Button>
-                    <Button onIncClick={this.props.onResClick}
-                            // disabled={isDisabledRes}
-                            // classForDis={classForDisRes}
-                    >
+                    <Button onIncClick={this.props.resValue}
+                            disabled={isDisabledRes}
+                            classForDis={classForDisRes}>
                         Res
                     </Button>
                 </ButtonsBlock>
@@ -46,30 +49,18 @@ class CounterItem extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        value: state.value,
-        settedMaxValue: state.settedMaxValue,
-        settedMinValue: state.settedMinValue,
-        isSetted: state.isSetted
+        settedMaxValue: state.counter.settedMaxValue,
+        settedMinValue: state.counter.settedMinValue,
+        value: state.counter.value,
+        isSetted: state.counter.isSetted
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onIncClick: () => {
-            const action ={
-                type: 'INC-CLICK'
-            };
-            dispatch(action);
-        },
-        onResClick: () => {
-            const action = {
-                type: 'RES-CLICK',
-            };
-            dispatch(action)
-        }
+        incValue: () => {dispatch(incCurrentValue())},
+        resValue: () => {dispatch(resCurrentValue())}
     }
 }
 
-const ConnectedCounterItem = connect(mapStateToProps, mapDispatchToProps)(CounterItem);
-
-export default ConnectedCounterItem;
+export default connect(mapStateToProps, mapDispatchToProps)(CounterItem);
