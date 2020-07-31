@@ -1,8 +1,17 @@
 import React from 'react';
 import style from './InputSet.module.css';
 
-class InputSet extends React.Component {
+type PropsType ={
+    isError: boolean
+    title: string
+    type: string
+    value: string
+    onClickChange: () => void
+    onChangeFunc: () => void
+}
 
+
+class InputSet extends React.Component<PropsType> {
 
     render = () => {
 
@@ -14,7 +23,7 @@ class InputSet extends React.Component {
                 <input type={this.props.type}
                        data-title={this.props.title}
                        className={style[classForDisabled]}
-                       value = {this.props.value}
+                       value={this.props.value}
                        onClick={this.props.onClickChange}
                        onChange={this.props.onChangeFunc}
                 />

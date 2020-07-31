@@ -1,6 +1,6 @@
 import React from "react";
 import style from './SettingItem.module.css'
-import InputSet from "../InputSet/InputSet";
+import InputSet from "../InputSet/InputSet.tsx";
 import Button from "../Button/Button";
 import {BlockBorder, ButtonsBlock, DisplayBlock} from "../StyledElements/StyledElements";
 import {connect} from 'react-redux';
@@ -62,10 +62,10 @@ class SettingItem extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        settedMaxValue: state.settedMaxValue,
-        settedMinValue: state.settedMinValue,
-        value: state.value,
-        isSetted: state.isSetted
+        settedMaxValue: state.counter.settedMaxValue,
+        settedMinValue: state.counter.settedMinValue,
+        value: state.counter.value,
+        isSetted: state.counter.isSetted
     }
 }
 

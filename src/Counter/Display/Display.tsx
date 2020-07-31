@@ -2,7 +2,15 @@ import React from 'react';
 import style from "./Display.module.css";
 import {DisplayBlock} from "../StyledElements/StyledElements";
 
-class Display extends React.Component {
+type PropsType = {
+    isErrorMessage: boolean
+    classForStop: string
+    isSeted: boolean
+    value: string
+
+}
+
+class Display extends React.Component<PropsType> {
     render = () => {
 
         const classForErrorMessage = this.props.isErrorMessage ? 'errorMessage' : '';

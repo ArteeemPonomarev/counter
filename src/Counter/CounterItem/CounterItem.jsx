@@ -1,5 +1,5 @@
 import React from 'react';
-import Display from "../Display/Display";
+import Display from "../Display/Display.tsx";
 import Button from "../Button/Button";
 import {BlockBorder, ButtonsBlock} from "../StyledElements/StyledElements";
 import {incCurrentValue, resCurrentValue} from "../../store/reducer";
@@ -49,10 +49,10 @@ class CounterItem extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        settedMaxValue: state.settedMaxValue,
-        settedMinValue: state.settedMinValue,
-        value: state.value,
-        isSetted: state.isSetted
+        settedMaxValue: state.counter.settedMaxValue,
+        settedMinValue: state.counter.settedMinValue,
+        value: state.counter.value,
+        isSetted: state.counter.isSetted
     }
 }
 
